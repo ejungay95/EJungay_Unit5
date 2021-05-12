@@ -34,18 +34,23 @@ public class Target : MonoBehaviour
      
   }
 
-  private void OnTriggerEnter(Collider other) {
-    if(other.CompareTag("Sensor"))
+  private void OnTriggerEnter(Collider other)
+  {
+    Destroy(gameObject);
+    if(!other.CompareTag("Hazard"))
     {
-      Destroy(gameObject);
+      gameManager.GameOver();
     }
   }
 
   private void OnMouseDown()
   {
-    gameManager.UpdateScore(pointValue);
-    Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
-    Destroy(gameObject);
+    if(gameManager.gameActive)
+    {
+      gameManager.UpdateScore(pointValue);
+      Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+      Destroy(gameObject);
+    }
   }
 
   void RandomForce()
